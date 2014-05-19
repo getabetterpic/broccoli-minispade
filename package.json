@@ -1,0 +1,20 @@
+{
+  "name" : "broccoli-minispade",
+  "description" : "Minispade filter for Broccoli",
+  "version" : "0.0.1",
+  "author" : "David Lawton<david@davetheninja.net>",
+  "main" : "index.js",
+  "license" : "MIT",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/davetheninja/broccoli-minispade"
+  },
+  "keywords" : [
+    "broccoli-plugin",
+    "minispade",
+    "javascript"
+  ],
+  "dependencies" : {
+    "broccoli-filter" : "^0.1.6"
+  }
+}
