@@ -25,7 +25,7 @@ MinispadeFilter.prototype.processString = function(code, name) {
   }
   var moduleId = name.replace(/(lib\/|\/index)/, '').replace('.js', '');
   if (this.useSourceUrl === true) {
-    contents = JSON.stringify("(function() {" + code + "}).call(this);//# sourceURL=" + moduleId);
+    contents = JSON.stringify("(function() {" + code + "})();//# sourceURL=" + moduleId);
   } else {
     contents = "function() {" + code + "}";
   }
