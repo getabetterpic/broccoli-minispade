@@ -23,7 +23,7 @@ MinispadeFilter.prototype.processString = function(code, name) {
     code.replace(/require\(/, 'minispade.require(');
     code.replace(/requireAll\(/, 'minispade.requireAll(');
   }
-  var moduleId = name.replace('lib/', '').replace('.js', '');
+  var moduleId = name.replace(/(lib\/|\/index)/, '').replace('.js', '');
   if (this.useSourceUrl === true) {
     contents = JSON.stringify("(function() {" + code + "}).call(this);//# sourceURL=" + moduleId);
   } else {
