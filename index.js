@@ -20,8 +20,8 @@ MinispadeFilter.prototype.targetExtension = 'js';
 MinispadeFilter.prototype.processString = function(code, name) {
   var contents = '';
   if (this.rewriteRequire) {
-    code.replace(/require\(/g, 'minispade.require(');
-    code.replace(/requireAll\(/g, 'minispade.requireAll(');
+    code.replace('require(', 'minispade.require(');
+    code.replace('requireAll(', 'minispade.requireAll(');
   }
   var moduleId = name.replace(/(lib\/|\/index)/, '').replace('.js', '');
   if (this.useSourceUrl === true) {
