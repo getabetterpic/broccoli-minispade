@@ -1,5 +1,4 @@
 var Filter = require('broccoli-filter');
-var path = require('path');
 
 module.exports = MinispadeFilter;
 
@@ -19,7 +18,7 @@ function MinispadeFilter(inputTree, options) {
 MinispadeFilter.prototype.targetExtension = 'js';
 
 MinispadeFilter.prototype.processString = function(code, name) {
-  var contents = '', this_dir = path.dirname(name);
+  var contents = '', self = this;
   var moduleId = name.replace(/(lib\/|\/index)/, '').replace('.js', '');
   if (this.useSourceUrl === true) {
     contents = JSON.stringify("(function() {" + code + "})();//# sourceURL=" + moduleId);
@@ -28,10 +27,26 @@ MinispadeFilter.prototype.processString = function(code, name) {
   }
   if (this.rewriteRequire) {
     contents = contents.replace(/\s*(require|requireAll)\s*\(\s*[\'\"]([^\'\"]*)[\'\"]\s*\)\s*/g, function(match, p1, p2) {
-      path = p2[0] === '.' ? p2.slice(1) : p2;
-      path = this_dir + path;
+      path = self.getFullPath(name, p2);
       return "minispade." + p1 + "('" + path + "')";
     });
   }
   return "minispade.register('" + moduleId + "'," + contents + ");";
+}
+
+MinispadeFilter.prototype.getFullPath = function(base, relative) {
+  // This is from a SO answer: http://stackoverflow.com/a/14780463
+  var stack = base.split("/"),
+    parts = relative.split("/");
+  stack.pop(); // remove current file name (or empty string)
+               // (omit if "base" is the current folder without trailing slash)
+  for (var i=0; i<parts.length; i++) {
+    if (parts[i] === ".")
+      continue;
+    if (parts[i] === "..")
+      stack.pop();
+    else
+      stack.push(parts[i]);
+  }
+  return stack.join("/");
 }
