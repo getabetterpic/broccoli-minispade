@@ -19,15 +19,15 @@ MinispadeFilter.prototype.targetExtension = 'js';
 
 MinispadeFilter.prototype.processString = function(code, name) {
   var contents = '';
-  if (this.rewriteRequire) {
-    code.replace('require(', 'minispade.require(');
-    code.replace('requireAll(', 'minispade.requireAll(');
-  }
   var moduleId = name.replace(/(lib\/|\/index)/, '').replace('.js', '');
   if (this.useSourceUrl === true) {
     contents = JSON.stringify("(function() {" + code + "})();//# sourceURL=" + moduleId);
   } else {
     contents = "function() {" + code + "}";
+  }
+  if (this.rewriteRequire) {
+    contents.replace('require(', 'minispade.require(');
+    contents.replace('requireAll(', 'minispade.requireAll(');
   }
   return "minispade.register('" + moduleId + "'," + contents + ");";
 }
