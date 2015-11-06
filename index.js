@@ -26,8 +26,8 @@ MinispadeFilter.prototype.processString = function(code, name) {
     contents = "function() {" + code + "}";
   }
   if (this.rewriteRequire) {
-    contents.replace('require(', 'minispade.require(');
-    contents.replace('requireAll(', 'minispade.requireAll(');
+    contents = contents.replace('require(', 'minispade.require(');
+    contents = contents.replace('requireAll(', 'minispade.requireAll(');
   }
   return "minispade.register('" + moduleId + "'," + contents + ");";
 }
