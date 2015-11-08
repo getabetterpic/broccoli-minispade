@@ -1,7 +1,7 @@
 {
   "name": "broccoli-minispade",
   "description": "Minispade filter for Broccoli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "David Lawton<david@davetheninja.net>",
   "main": "index.js",
   "license": "MIT",
