@@ -17,5 +17,9 @@
   "dependencies": {
     "broccoli-filter": "^0.1.6",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "qunit": "^0.7.7"
   }
 }

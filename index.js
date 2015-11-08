@@ -27,11 +27,7 @@ MinispadeFilter.prototype.processString = function(code, name) {
   }
   if (this.rewriteRequire) {
     contents = contents.replace(/\s*(require|requireAll)\s*\(\s*[\'\"]([^\'\"]*)[\'\"]\s*\)\s*/g, function(match, p1, p2) {
-      if (p2.match(/\//) != null) {
-        path = self.getFullPath(name, p2);
-      } else {
-        path = p2;
-      }
+      path = self.getFullPath(name, p2);
       return "minispade." + p1 + "('" + path + "')";
     });
   }
@@ -39,6 +35,9 @@ MinispadeFilter.prototype.processString = function(code, name) {
 }
 
 MinispadeFilter.prototype.getFullPath = function(base, relative) {
+  if (relative.match(/\//) === null) {
+    return relative;
+  }
   // This is from a SO answer: http://stackoverflow.com/a/14780463
   var stack = base.split("/"),
     parts = relative.split("/");
