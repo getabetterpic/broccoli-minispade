@@ -1,5 +1,4 @@
 var testHelpers = require('broccoli-test-helpers');
-var assert = require('assert');
 var _MinispadeFilter = require('../index');
 var makeTestHelper = testHelpers.makeTestHelper;
 var cleanupBuilders = testHelpers.cleanupBuilders;
