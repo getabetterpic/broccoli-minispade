@@ -15,8 +15,7 @@
     "javascript"
   ],
   "dependencies": {
-    "broccoli-filter": "^0.1.6",
-    "path": "^0.12.7"
+    "broccoli-filter": "^0.1.6"
   },
   "devDependencies": {
     "broccoli-test-helpers": "0.0.8",
