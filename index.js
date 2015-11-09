@@ -27,14 +27,14 @@ MinispadeFilter.prototype.processString = function(code, name) {
   }
   if (this.rewriteRequire) {
     contents = contents.replace(/\s*(require|requireAll)\s*\(\s*[\'\"]([^\'\"]*)[\'\"]\s*\)\s*/g, function(match, p1, p2) {
-      path = self.getFullPath(name, p2);
+      path = self._getFullPath(name, p2);
       return "minispade." + p1 + "('" + path + "')";
     });
   }
   return "minispade.register('" + moduleId + "'," + contents + ");";
 }
 
-MinispadeFilter.prototype.getFullPath = function(base, relative) {
+MinispadeFilter.prototype._getFullPath = function(base, relative) {
   if (relative.match(/\//) === null) {
     return relative;
   }
