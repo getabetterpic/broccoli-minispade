@@ -2,7 +2,10 @@
   "name": "broccoli-minispade",
   "description": "Minispade filter for Broccoli",
   "version": "0.0.2",
-  "author": "David Lawton<david@davetheninja.net>",
+  "author": "David Lawton <david@davetheninja.net>",
+  "contributors": [
+    "Daniel Smith <dan@getabetterpic.com>"
+  ],
   "main": "index.js",
   "license": "MIT",
   "repository": {
@@ -23,6 +26,7 @@
     "mocha": "^2.3.3"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha -- -R spec"
   }
 }
