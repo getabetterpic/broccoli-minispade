@@ -9,6 +9,7 @@ function MinispadeFilter(inputTree, options) {
   if (!(this instanceof MinispadeFilter)) {
     return new MinispadeFilter(inputTree, options);
   }
+  options = options || {};
   this.inputTree = inputTree;
   this.extensions = [ 'js' ];
   this.useSourceUrl = options.useSourceUrl || false;
