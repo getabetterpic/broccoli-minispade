@@ -73,5 +73,14 @@ describe('MinispadeFilter', function() {
         expect(fileContents).to.equal("minispade.register('deep/file',\"(function() {minispade.require('deep/stuff');})();//# sourceURL=deep/file\");");
       });
     });
+
+    it('removes javascripts from path', function() {
+      var tree = new MinispadeFilter('.', { rewriteRequire: true, useSourceUrl: true });
+      return tree.then(function(result) {
+        var main = result.files[result.files.indexOf('deep/javascripts/files.js')];
+        var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
+        expect(fileContents).to.equal("minispade.register('deep/files',\"(function() {minispade.require('deep/stuffs');})();//# sourceURL=deep/files\");");
+      });
+    });
   });
 });
