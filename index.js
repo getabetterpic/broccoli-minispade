@@ -20,7 +20,7 @@ MinispadeFilter.prototype.targetExtension = 'js';
 
 MinispadeFilter.prototype.processString = function(code, name) {
   var contents = '', self = this;
-  var moduleId = name.replace(/(lib\/|\/index)/, '').replace('.js', '');
+  var moduleId = name.replace(/(lib\/|\/index|\/javascript)/, '').replace('.js', '');
   if (this.useSourceUrl === true) {
     contents = JSON.stringify("(function() {" + code + "})();//# sourceURL=" + moduleId);
   } else {
@@ -29,6 +29,7 @@ MinispadeFilter.prototype.processString = function(code, name) {
   if (this.rewriteRequire) {
     contents = contents.replace(/\s*(require|requireAll)\s*\(\s*[\'\"]([^\'\"]*)[\'\"]\s*\)\s*/g, function(match, p1, p2) {
       path = self._getFullPath(name, p2);
+      path = path.replace(/\/javascript/, '');
       return "minispade." + p1 + "('" + path + "')";
     });
   }

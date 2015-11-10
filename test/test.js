@@ -64,5 +64,14 @@ describe('MinispadeFilter', function() {
         expect(fileContents).to.equal("minispade.register('main',\"(function() {minispade.require('hill');})();//# sourceURL=main\");");
       });
     });
+
+    it('removes javascript from path', function() {
+      var tree = new MinispadeFilter('.', { rewriteRequire: true, useSourceUrl: true });
+      return tree.then(function(result) {
+        var main = result.files[result.files.indexOf('deep/javascript/file.js')];
+        var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
+        expect(fileContents).to.equal("minispade.register('deep/file',\"(function() {minispade.require('deep/stuff');})();//# sourceURL=deep/file\");");
+      });
+    });
   });
 });
