@@ -82,5 +82,14 @@ describe('MinispadeFilter', function() {
         expect(fileContents).to.equal("minispade.register('deep/files',\"(function() {minispade.require('deep/stuffs');})();//# sourceURL=deep/files\");");
       });
     });
+
+    it('does not namespace a bare multi-directory require', function() {
+      var tree = new MinispadeFilter('.', { rewriteRequire: true, useSourceUrl: true });
+      return tree.then(function(result) {
+        var main = result.files[result.files.indexOf('deep/bootstrap-require.js')];
+        var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
+        expect(fileContents).to.equal("minispade.register('deep/bootstrap-require',\"(function() {minispade.require('bootstrap-sass/bootstrap-transition');})();//# sourceURL=deep/bootstrap-require\");");
+      });
+    });
   });
 });

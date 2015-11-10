@@ -37,7 +37,7 @@ MinispadeFilter.prototype.processString = function(code, name) {
 }
 
 MinispadeFilter.prototype._getFullPath = function(base, relative) {
-  if (relative.match(/\//) === null) {
+  if (relative.match(/[\.]{1,2}\//) === null) {
     return relative;
   }
   // This is from a SO answer: http://stackoverflow.com/a/14780463
