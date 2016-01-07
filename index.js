@@ -27,10 +27,10 @@ MinispadeFilter.prototype.processString = function(code, name) {
     contents = "function() {" + code + "}";
   }
   if (this.rewriteRequire) {
-    contents = contents.replace(/\s*(require|requireAll)\s*\(\s*[\'\"]([^\'\"]*)[\'\"]\s*\)\s*/g, function(match, p1, p2) {
-      path = self._getFullPath(name, p2);
+    contents = contents.replace(/\s*(require|requireAll)\s*\(\s*(\\*\'|\\*\")([^\'\"]*)(\\*\'|\\*\")\s*\)\s*/g, function(match, p1, p2, p3, p4) {
+      path = self._getFullPath(name, p3);
       path = path.replace(/\/javascript[s]*/, '');
-      return "minispade." + p1 + "('" + path + "')";
+      return "minispade." + p1 + "(" + p2 + path + p4 + ")";
     });
   }
   return "minispade.register('" + moduleId + "'," + contents + ");";

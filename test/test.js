@@ -38,6 +38,15 @@ describe('MinispadeFilter', function() {
       });
     });
 
+    it('rewrites the requires even after uglification', function() {
+      var tree = new MinispadeFilter('no-space', { rewriteRequire: true });
+      return tree.then(function(result) {
+        var uglified = result.files[result.files.indexOf('uglified.js')];
+        var fileContents = fs.readFileSync(path.join(result.directory, uglified), 'utf8');
+        expect(fileContents.trim()).to.equal("minispade.register('uglified',function() {minispade.require(\\\"bar_chart\\\");minispade.require(\\\"selectable_bar_chart\\\");\n});".trim());
+      });
+    });
+
     it('names the modules based on relative paths', function() {
       var tree = new MinispadeFilter('.', { rewriteRequire: true });
       return tree.then(function(result) {
