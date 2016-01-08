@@ -43,7 +43,7 @@ describe('MinispadeFilter', function() {
       return tree.then(function(result) {
         var uglified = result.files[result.files.indexOf('uglified.js')];
         var fileContents = fs.readFileSync(path.join(result.directory, uglified), 'utf8');
-        expect(fileContents.trim()).to.equal("minispade.register('uglified',function() {minispade.require(\"bar_chart\");minispade.require(\"selectable_bar_chart\");\n});".trim());
+        expect(fileContents.trim()).to.equal("minispade.register('uglified',function() {minispade.require(\\\"bar_chart\\\");minispade.require(\\\"selectable_bar_chart\\\");\n});".trim());
       });
     });
 
