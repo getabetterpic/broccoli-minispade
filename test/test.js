@@ -43,7 +43,8 @@ describe('MinispadeFilter', function() {
       return tree.then(function(result) {
         var uglified = result.files[result.files.indexOf('uglified.js')];
         var fileContents = fs.readFileSync(path.join(result.directory, uglified), 'utf8');
-        expect(fileContents.trim()).to.equal("minispade.register('uglified',function() {minispade.require(\\\"bar_chart\\\");minispade.require(\\\"selectable_bar_chart\\\");\n});".trim());
+        expect(fileContents.trim()).to.equal("minispade.register('uglified',function() \
+{minispade.require(\\\"bar_chart\\\");minispade.require(\\\"selectable_bar_chart\\\");\n});".trim());
       });
     });
 
@@ -52,7 +53,8 @@ describe('MinispadeFilter', function() {
       return tree.then(function(result) {
         var main = result.files[result.files.indexOf('deep/index.js')];
         var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
-        expect(fileContents).to.equal("minispade.register('deep',function() {minispade.require('deep/link/stuff');});");
+        expect(fileContents).to.equal("minispade.register('deep',function() {\
+minispade.require('deep/link/stuff');});");
       });
     });
 
@@ -61,7 +63,8 @@ describe('MinispadeFilter', function() {
       return tree.then(function(result) {
         var main = result.files[result.files.indexOf('deep/link/stuff.js')];
         var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
-        expect(fileContents).to.equal("minispade.register('deep/link/stuff',function() {minispade.require('deep/otherStuff');});");
+        expect(fileContents).to.equal("minispade.register('deep/link/stuff',function() {\
+minispade.require('deep/otherStuff');});");
       });
     });
 
@@ -70,7 +73,8 @@ describe('MinispadeFilter', function() {
       return tree.then(function(result) {
         var main = result.files[result.files.indexOf('main.js')];
         var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
-        expect(fileContents).to.equal("minispade.register('main',\"(function() {minispade.require('hill');})();//# sourceURL=main\");");
+        expect(fileContents).to.equal("minispade.register('main',\"(function() {\
+minispade.require('hill');})();//# sourceURL=main\");");
       });
     });
 
@@ -79,7 +83,8 @@ describe('MinispadeFilter', function() {
       return tree.then(function(result) {
         var main = result.files[result.files.indexOf('deep/javascript/file.js')];
         var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
-        expect(fileContents).to.equal("minispade.register('deep/file',\"(function() {minispade.require('deep/stuff');})();//# sourceURL=deep/file\");");
+        expect(fileContents).to.equal("minispade.register('deep/file',\"(function() {\
+minispade.require('deep/stuff');})();//# sourceURL=deep/file\");");
       });
     });
 
@@ -88,7 +93,8 @@ describe('MinispadeFilter', function() {
       return tree.then(function(result) {
         var main = result.files[result.files.indexOf('deep/javascripts/files.js')];
         var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
-        expect(fileContents).to.equal("minispade.register('deep/files',\"(function() {minispade.require('deep/stuffs');})();//# sourceURL=deep/files\");");
+        expect(fileContents).to.equal("minispade.register('deep/files',\"(function() {\
+minispade.require('deep/stuffs');})();//# sourceURL=deep/files\");");
       });
     });
 
@@ -97,7 +103,8 @@ describe('MinispadeFilter', function() {
       return tree.then(function(result) {
         var main = result.files[result.files.indexOf('deep/bootstrap-require.js')];
         var fileContents = fs.readFileSync(path.join(result.directory, main), 'utf8');
-        expect(fileContents).to.equal("minispade.register('deep/bootstrap-require',\"(function() {minispade.require('bootstrap-sass/bootstrap-transition');})();//# sourceURL=deep/bootstrap-require\");");
+        expect(fileContents).to.equal("minispade.register('deep/bootstrap-require',\"(function() {\
+minispade.require('bootstrap-sass/bootstrap-transition');})();//# sourceURL=deep/bootstrap-require\");");
       });
     });
   });
