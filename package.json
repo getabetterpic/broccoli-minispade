@@ -1,20 +1,32 @@
 {
-  "name" : "broccoli-minispade",
-  "description" : "Minispade filter for Broccoli",
-  "version" : "0.0.1",
-  "author" : "David Lawton<david@davetheninja.net>",
-  "main" : "index.js",
-  "license" : "MIT",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/davetheninja/broccoli-minispade"
+  "name": "broccoli-minispade",
+  "description": "Minispade filter for Broccoli",
+  "version": "0.0.2",
+  "author": "David Lawton <david@davetheninja.net>",
+  "contributors": [
+    "Daniel Smith <dan@getabetterpic.com>"
+  ],
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davetheninja/broccoli-minispade"
   },
-  "keywords" : [
+  "keywords": [
     "broccoli-plugin",
     "minispade",
     "javascript"
   ],
-  "dependencies" : {
-    "broccoli-filter" : "^0.1.6"
+  "dependencies": {
+    "broccoli-filter": "^0.1.6"
+  },
+  "devDependencies": {
+    "broccoli-test-helpers": "0.0.8",
+    "chai": "^3.4.1",
+    "mocha": "^2.3.3"
+  },
+  "scripts": {
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha -- -R spec"
   }
 }
