@@ -27,11 +27,14 @@ MinispadeFilter.prototype.processString = function(code, name) {
     contents = "function() {" + code + "}";
   }
   if (this.rewriteRequire) {
-    contents = contents.replace(/\s*(require|requireAll)\s*\(\s*(\\*\'|\\*\")([^\'\"]*)(\\*\'|\\*\")\s*\)\s*/g, function(match, p1, p2, p3, p4) {
-      path = self._getFullPath(name, p3);
-      path = path.replace(/\/javascript[s]*/, '');
-      return "minispade." + p1 + "(" + p2 + path + p4 + ")";
-    });
+    contents = contents
+      .replace(/\s*(require|requireAll)\s*\(\s*(\\*\'|\\*\")([^\'\"]*)(\\*\'|\\*\")\s*\)\s*/g,
+                function(match, requireStatement, frontQuote, relativePath, backQuote) {
+                  path = self._getFullPath(name, relativePath);
+                  path = path.replace(/\/javascript[s]*/, '');
+                  return "minispade." + requireStatement + "(" + frontQuote + path + backQuote + ")";
+                }
+      );
   }
   return "minispade.register('" + moduleId + "'," + contents + ");";
 }
@@ -41,10 +44,23 @@ MinispadeFilter.prototype._getFullPath = function(base, relative) {
     return relative;
   }
   // This is from a SO answer: http://stackoverflow.com/a/14780463
-  var stack = base.split("/"),
-    parts = relative.split("/");
-  stack.pop(); // remove current file name (or empty string)
-               // (omit if "base" is the current folder without trailing slash)
+  var stack = this._getFilenameParts(base),
+    parts = this._getFilenameParts(relative);
+  stack = this._removeCurrentFilename(stack); // (omit if "base" is the current folder without trailing slash)
+  stack = this._cleanAndOrderStack(stack, parts);
+  return stack.join("/");
+}
+
+MinispadeFilter.prototype._getFilenameParts = function(base) {
+  return base.split("/");
+}
+
+MinispadeFilter.prototype._removeCurrentFilename = function(stack) {
+  stack.pop();
+  return stack;
+}
+
+MinispadeFilter.prototype._cleanAndOrderStack = function(stack, parts) {
   for (var i=0; i<parts.length; i++) {
     if (parts[i] === ".")
       continue;
@@ -53,5 +69,5 @@ MinispadeFilter.prototype._getFullPath = function(base, relative) {
     else
       stack.push(parts[i]);
   }
-  return stack.join("/");
+  return stack;
 }
