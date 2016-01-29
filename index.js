@@ -28,7 +28,7 @@ MinispadeFilter.prototype.processString = function(code, name) {
   }
   if (this.rewriteRequire) {
     contents = contents
-      .replace(/\s*(require|requireAll)\s*\(\s*(\\*\'|\\*\")([^\'\"]*)(\\*\'|\\*\")\s*\)\s*/g,
+      .replace(/\s*(require|requireAll)\s*\(\s*(\\?\'|\\?\")([^\'\"]*)(\\?\'|\\?\")\s*\)/g,
                 function(match, requireStatement, frontQuote, relativePath, backQuote) {
                   path = self._getFullPath(name, relativePath);
                   path = path.replace(/\/javascript[s]*/, '');
