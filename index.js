@@ -43,11 +43,13 @@ MinispadeFilter.prototype._getFullPath = function(base, relative) {
   if (relative.match(/[\.]{1,2}\//) === null) {
     return relative;
   }
-  // This is from a SO answer: http://stackoverflow.com/a/14780463
   var stack = this._getFilenameParts(base),
     parts = this._getFilenameParts(relative);
-  stack = this._removeCurrentFilename(stack); // (omit if "base" is the current folder without trailing slash)
-  stack = this._cleanAndOrderStack(stack, parts);
+
+  // omit _removeCurrentFilename if "base" is the current folder without trailing slash
+  stack = this._removeCurrentFilename(stack);
+
+  stack = this._calcFullPath(stack, parts);
   return stack.join("/");
 }
 
@@ -60,7 +62,8 @@ MinispadeFilter.prototype._removeCurrentFilename = function(stack) {
   return stack;
 }
 
-MinispadeFilter.prototype._cleanAndOrderStack = function(stack, parts) {
+MinispadeFilter.prototype._calcFullPath = function(stack, parts) {
+  // This is from a SO answer: http://stackoverflow.com/a/14780463
   for (var i=0; i<parts.length; i++) {
     if (parts[i] === ".")
       continue;
